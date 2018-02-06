@@ -1,0 +1,1 @@
+# homebridge-xiaomi-power-strip

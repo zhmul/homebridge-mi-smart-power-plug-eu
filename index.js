@@ -44,10 +44,10 @@ XiaoMiPowerStrip.prototype = {
     discover: function () {
         var accessory = this;
 
-        var device = miio.createDevice({
-            address: accessory.address,
-            token: accessory.token,
-            model: accessory.model
+        const device = miio.createDevice({
+            address: '192.168.1.23',
+            token: '07642c5604a7ab99ebb33e5ec1e2f68f',
+            model: "zimi.powerstrip.v2"
         });
         device.init();
         accessory.device = device;

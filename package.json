@@ -1,0 +1,20 @@
+{
+  "name": "homebridge-xiaomi-power-strip",
+  "version": "1.3.1",
+  "description": "Xiaomi Mi Power Strip plugin for Homebridge. Fork from https://github.com/mininny/homebridge-xiaomi-power-strip",
+  "license": "MIT",
+  "keywords": [
+    "homebridge-plugin",
+    "xiaomi",
+    "mi power strip"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mininny/homebridge-xiaomi-power-strip.git"
+  },
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.0",
+    "miio": ">=0.14.1"
+  }
+}

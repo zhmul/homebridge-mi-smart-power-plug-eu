@@ -63,8 +63,8 @@ XiaoMiPowerStrip.prototype = {
         this.log.info('getPowerState:', state);
     },
 
-    setPowerState: function (state, callback) {
-        this.log.info('setPowerState:', state);
+    setPowerState: function (Power, callback) {
+        this.log.info('setPowerState:', Power);
         this.device.setPower(state === Characteristic.Active.ACTIVE)
             .then((res) => {
                 this.log.info('setPowerStateResponse:', res);

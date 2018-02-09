@@ -2,7 +2,7 @@ var miio = require('miio');
 var Service, Characteristic;
 
 module.exports = function (homebridge) {
-  
+
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
 
@@ -54,7 +54,23 @@ XiaoMiPowerStrip.prototype = {
 
     getPowerState: function (callback) {
         var on = this.device.power()
-        if (on) {
+        if (on == undefined){
+          on = true
+          this.device.setPower(true)
+            .then(on => console.log('Power is now', on))
+            .catch(err=>{
+              callback(err);
+            });
+        }
+        if (on == undefined){
+          on = true
+          this.device.setPower(true)
+            .then(on => console.log('Power is now', on))
+            .catch(err=>{
+              callback(err);
+            });
+        }
+        else if(on) {
             callback(null, true);
         } else {
             callback(null, false);
@@ -66,10 +82,16 @@ XiaoMiPowerStrip.prototype = {
         this.log.info('setPowerState:', Power);
         if(!Power){
           this.device.setPower(false)
-            .then(on => console.log('Power is now', on));
+            .then(on => console.log('Power is now', on))
+            .catch(err=>{
+              callback(err);
+            });
         } else{
           this.device.setPower(true)
-            .then(on => console.log('Power is now', on));
+            .then(on => console.log('Power is now', on))
+            .catch(err=>{
+              callback(err);
+            });
         }
         callback();
     },

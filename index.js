@@ -94,11 +94,12 @@ XiaoMiPowerStrip.prototype = {
         //     });
         // }
         //callback();
-        this.device.call('setPower', [(this.device.power()) ? true : false])
+        this.device.call('setPower', [(this.device.power()) ? false : true])
 			.then(result => {
 				(result[0] === 'ok') ? callback() : callback(new Error(result[0]));
 			})
 			.catch(err => {
+                console.log("Promise rejected")
 				callback(err);
 			});
     },

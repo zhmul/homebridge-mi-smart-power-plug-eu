@@ -79,7 +79,7 @@ XiaoMiPowerStrip.prototype = {
     },
 
     setPowerOn: function (Power, callback) {
-        // this.log.info('setPowerState:', Power);
+        this.log.info('setPowerState:', Power);
         // if(!Power){
         //   this.device.setPower(false)
         //     .then(on => console.log('Power is now', on))
@@ -87,19 +87,18 @@ XiaoMiPowerStrip.prototype = {
         //       callback(err);
         //     });
         // } else{
-        //   this.device.setPower(true)
-        //     .then(on => console.log('Power is now', on))
-        //     .catch(err=>{
-        //       callback(err);
-        //     });
-        // }
-        //callback();
-        this.device.call('setPower', ((this.device.power()) ? true : false))
-			.then(on=>console.log('Power is now', on))
-			.catch(err => {
-                console.log("Promise rejected")
-				callback(err);
-			});
+        this.device.setPower(Power ? true: false)
+            .then(on => console.log('Power is now', on))
+            .catch(err=>{
+              callback(err);
+            });
+        callback();
+        // this.device.call('setPower', ((this.device.power()) ? true : false))
+		// 	.then(on=>console.log('Power is now', on))
+		// 	.catch(err => {
+        //         console.log("Promise rejected")
+		// 		callback(err);
+		// 	});
     },
 
     identify: function(callback) {

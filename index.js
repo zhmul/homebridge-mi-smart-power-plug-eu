@@ -94,7 +94,7 @@ XiaoMiPowerStrip.prototype = {
         //     });
         // }
         //callback();
-        this.device.call('setPower', [(state) ? 'on' : 'off'])
+        this.device.call('setPower', [(on) ? 'on' : 'off'])
 			.then(result => {
 				(result[0] === 'ok') ? callback() : callback(new Error(result[0]));
 			})

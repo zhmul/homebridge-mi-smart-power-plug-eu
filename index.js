@@ -94,7 +94,7 @@ XiaoMiPowerStrip.prototype = {
         //     });
         // }
         //callback();
-        this.device.call('setPower', [(this.device.power()) ? false : true])
+        this.device.call('setPower', ((this.device.power()) ? true : false))
 			.then(on=>console.log('Power is now', on))
 			.catch(err => {
                 console.log("Promise rejected")

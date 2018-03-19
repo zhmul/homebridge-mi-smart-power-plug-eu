@@ -1,20 +1,18 @@
 var miio = require('miio');
 var Service, Characteristic;
+var devices = [];
 
 module.exports = function (homebridge) {
 
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
 
-    homebridge.registerAccessory('homebridge-xiaomi-power-strip', 'XiaoMiPowerStrip', XiaoMiPowerStrip);
+    homebridge.registerAccessory('homebridge-mi-smart-power-strip', 'MiSmartPowerStrip', MiSmartPowerStrip);
 }
 
-function XiaoMiPowerStrip(log, config) {
+function MiSmartPowerStrip(log, config) {
     this.log = log;
-    this.name = config.name || 'Power Strip';
-    this.address = config.address;
-    this.token = config.token;
-    this.model = config.model;
+    this.name = config.name || 'Mi Smart Power Strip';
 
     this.services = [];
 
@@ -23,7 +21,7 @@ function XiaoMiPowerStrip(log, config) {
     this.switchService
        .getCharacteristic(Characteristic.On)
        .on('get',this.getPowerState.bind(this))
-       .on('set',this.setPowerOn.bind(this));
+       .on('set',this.setPowerState.bind(this));
 
     this.services.push(this.switchService);
 
@@ -31,77 +29,88 @@ function XiaoMiPowerStrip(log, config) {
 
     this.serviceInfo
         .setCharacteristic(Characteristic.Manufacturer, 'Xiaomi')
-        .setCharacteristic(Characteristic.Model, 'Power-Strip')
-        .setCharacteristic(Characteristic.SerialNumber, '62810821');;
+        .setCharacteristic(Characteristic.Model, 'Mi Smart Power Strip')
+        .setCharacteristic(Characteristic.SerialNumber, 'ZNCXB01ZM');
 
     this.services.push(this.serviceInfo);
 
     this.discover();
 }
 
-XiaoMiPowerStrip.prototype = {
+MiSmartPowerStrip.prototype = {
     discover: function () {
         var accessory = this;
-        const device = miio.createDevice({
-            address: accessory.address,
-            token: accessory.token,
-            model: accessory.model
+        var log = this.log;
+
+        log.debug('Discovering Mi Smart Power-Strip devices...');
+
+        // Discover device in the network
+        var browser = miio.browse();
+
+        browser.on('available', function(reg){
+            // Skip device without token
+            if(!reg.token)
+                return;
+
+            miio.device(reg).then(function(device){
+
+                if(device.type === undefined) {
+                    log.error('`MIIO` VERSION ON YOUR SYSTEM TOO HIGH. DOWNGRADE TO v0.14.1');
+                    return;
+                }
+
+                if(device.type != 'power-strip') 
+                    return;
+                
+                devices[reg.id] = device;
+                accessory.device = device;
+
+                log.debug('Discovered "%s" (ID: %s) on %s:%s.', reg.token, device.id, device.address, device.port);
+            });
         });
-        device.init();
-        accessory.device = device;
-        device.power();
+
+        browser.on('unavailable', function(reg){
+            // Skip device without token
+            if(!reg.token)
+                return;
+
+            var device = devices[reg.id];
+
+            if(!device)
+                return;
+
+            device.destroy();
+            delete devices[reg.id];
+        });
     },
 
     getPowerState: function (callback) {
-        var on = this.device.power()
-        if (on == undefined){
-          on = true
-          this.device.setPower(true)
-            .then(on => console.log('Power is now', on))
-            .catch(err=>{
-              callback(err);
-            });
-        }
-        if (on == undefined){
-          on = true
-          this.device.setPower(true)
-            .then(on => console.log('Power is now', on))
-            .catch(err=>{
-              callback(err);
-            });
-        }
-        else if(on) {
-            callback(null, true);
-        } else {
+
+        if(!this.device){
             callback(null, false);
+            return;
         }
-        this.log.info('getPowerState:', on);
+        
+        var channel = this.device.powerChannels && this.device.powerChannels.slice(-1)[0];
+
+        if(!channel) {
+            callback(null, false);
+            return;   
+        }
+
+        this.log.info('powerChannel:', channel);
+        this.log.info('channel[' + channel + '] getPowerState:', this.device.power(channel));
+
+        callback(null, this.device.power(channel));
     },
 
-    setPowerOn: function (Power, callback) {
-        this.log.info('setPowerState:', Power);
-        // if(!Power){
-        //   this.device.setPower(false)
-        //     .then(on => console.log('Power is now', on))
-        //     .catch(err=>{
-        //       callback(err);
-        //     });
-        // } else{
-        this.device.setPower(Power ? true: false)
-            .then(on => console.log('Power is now', on))
-            .catch(err=>{
-              callback(err);
-            });
-        callback();
-        // this.device.call('setPower', ((this.device.power()) ? true : false))
-		// 	.then(on=>console.log('Power is now', on))
-		// 	.catch(err => {
-        //         console.log("Promise rejected")
-		// 		callback(err);
-		// 	});
-    },
+    setPowerState: function (state, callback) {
+        if(!this.device){
+            callback(new Error('Not found Mi Smart Power-Strip.. :('));
+            return;
+        }
 
-    identify: function(callback) {
+        this.device.setPower(state);
         callback();
     },
 

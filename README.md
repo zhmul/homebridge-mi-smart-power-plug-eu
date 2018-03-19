@@ -1,6 +1,6 @@
 # homebridge-mi-smart-power-strip
 
-This project is forked from [homebridge-xiaomi-power-strip](https://github.com/mininny/homebridge-xiaomi-power-strip).
+This project is forked from [homebridge-xiaomi-power-strip](https://github.com/mininny/homebridge-xiaomi-power-strip) and referenced by [homebridge-mi-air-purifier2](https://www.npmjs.com/package/homebridge-mi-air-purifier2)
 
 
 This is Xiaomi Mi Smart Power Strip plugin for [Homebridge](https://github.com/nfarina/homebridge). Since Apple Homekit is not supporting air purifier device yet, this plugin will add just turn 'On' / 'Off' switch.

@@ -29,10 +29,15 @@ function MiSmartPowerStrip(log, config) {
 
     this.serviceInfo
         .setCharacteristic(Characteristic.Manufacturer, 'Xiaomi')
-        .setCharacteristic(Characteristic.Model, 'Mi Smart Power Strip')
+        .setCharacteristic(Characteristic.Model, 'zimi.powerstrip.v2')
         .setCharacteristic(Characteristic.SerialNumber, 'ZNCXB01ZM');
 
     this.services.push(this.serviceInfo);
+
+    if(miio.Device === undefined) {
+        log.error('`MIIO` VERSION ON YOUR SYSTEM TOO HIGH. DOWNGRADE TO v0.14.1');
+        return;
+    }
 
     this.discover();
 }
@@ -92,11 +97,6 @@ MiSmartPowerStrip.prototype = {
         }
         
         var channel = this.device.powerChannels && this.device.powerChannels.slice(-1)[0];
-
-        if(!channel) {
-            callback(null, false);
-            return;   
-        }
 
         this.log.info('powerChannel:', channel);
         this.log.info('channel[' + channel + '] getPowerState:', this.device.power(channel));

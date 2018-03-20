@@ -16,14 +16,18 @@ function MiSmartPowerStrip(log, config) {
 
     this.services = [];
 
-    this.switchService = new Service.Switch(this.name);
+    this.outletService = new Service.Outlet(this.name);
 
-    this.switchService
+    this.outletService
        .getCharacteristic(Characteristic.On)
        .on('get',this.getPowerState.bind(this))
        .on('set',this.setPowerState.bind(this));
 
-    this.services.push(this.switchService);
+    this.outletService
+       .getCharacteristic(Characteristic.OutletInUse)
+       .on('get',this.getPowerState.bind(this));
+
+    this.services.push(this.outletService);
 
     this.serviceInfo = new Service.AccessoryInformation();
 

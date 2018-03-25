@@ -44,3 +44,4 @@ This is Xiaomi Mi Smart Power Strip plugin for [Homebridge](https://github.com/n
 ### License
 
 See the [LICENSE](https://github.com/mininny/homebridge-xiaomi-power-strip/blob/master/LICENSE.md) file for license rights and limitations (MIT).
+

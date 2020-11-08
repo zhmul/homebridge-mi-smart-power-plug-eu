@@ -7,7 +7,7 @@ module.exports = function (homebridge) {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
 
-    homebridge.registerAccessory('homebridge-mi-smart-power-plug', 'MiSmartPowerPlug', MiSmartPowerPlug);
+    homebridge.registerAccessory('homebridge-mi-smart-power-plug-eu', 'MiSmartPowerPlug', MiSmartPowerPlug);
 }
 
 function MiSmartPowerPlug(log, config) {

@@ -7,12 +7,12 @@ module.exports = function (homebridge) {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
 
-    homebridge.registerAccessory('homebridge-mi-smart-power-strip', 'MiSmartPowerStrip', MiSmartPowerStrip);
+    homebridge.registerAccessory('homebridge-mi-smart-power-plug', 'MiSmartPowerPlug', MiSmartPowerPlug);
 }
 
-function MiSmartPowerStrip(log, config) {
+function MiSmartPowerPlug(log, config) {
     this.log = log;
-    this.name = config.name || 'Mi Smart Power Strip';
+    this.name = config.name || 'Mi Smart Power Plug';
 
     this.services = [];
 
@@ -29,8 +29,8 @@ function MiSmartPowerStrip(log, config) {
 
     this.serviceInfo
         .setCharacteristic(Characteristic.Manufacturer, 'Xiaomi')
-        .setCharacteristic(Characteristic.Model, 'zimi.powerstrip.v2')
-        .setCharacteristic(Characteristic.SerialNumber, 'ZNCXB01ZM');
+        .setCharacteristic(Characteristic.Model, 'chuangmi.plug.hmi206')
+        .setCharacteristic(Characteristic.SerialNumber, 'ZNCZ05CM');
 
     this.services.push(this.serviceInfo);
 
@@ -42,12 +42,12 @@ function MiSmartPowerStrip(log, config) {
     this.discover();
 }
 
-MiSmartPowerStrip.prototype = {
+MiSmartPowerPlug.prototype = {
     discover: function () {
         var accessory = this;
         var log = this.log;
 
-        log.debug('Discovering Mi Smart Power-Strip devices...');
+        log.debug('Discovering Mi Smart Power-Plug devices...');
 
         // Discover device in the network
         var browser = miio.browse();
@@ -106,7 +106,7 @@ MiSmartPowerStrip.prototype = {
 
     setPowerState: function (state, callback) {
         if(!this.device){
-            callback(new Error('Not found Mi Smart Power-Strip.. :('));
+            callback(new Error('Not found Mi Smart Power-Plug.. :('));
             return;
         }
 

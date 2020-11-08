@@ -1,6 +1,6 @@
 {
   "name": "homebridge-mi-smart-power-strip",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Xiaomi Mi Smart Power-Plug plugin for Homebridge. Fork from https://github.com/myriky/homebridge-mi-smart-power-strip.git",
   "license": "MIT",
   "keywords": [

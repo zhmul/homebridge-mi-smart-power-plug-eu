@@ -1,4 +1,4 @@
-# homebridge-mi-smart-power-strip
+# homebridge-mi-smart-power-plug
 
 This project is forked from [homebridge-xiaomi-power-strip](https://github.com/mininny/homebridge-xiaomi-power-strip) and referenced by [homebridge-mi-air-purifier2](https://www.npmjs.com/package/homebridge-mi-air-purifier2).
 

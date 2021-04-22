@@ -38,5 +38,5 @@ This is Xiaomi Mi Smart Power Plug plugin for [Homebridge](https://github.com/nf
 
 ### License
 
-See the [LICENSE](https://github.com/mininny/homebridge-xiaomi-power-strip/blob/master/LICENSE.md) file for license rights and limitations (MIT).
+See the [LICENSE](https://github.com/zhmul/homebridge-mi-smart-power-plug-eu/blob/master/LICENSE.md) file for license rights and limitations (MIT).
 

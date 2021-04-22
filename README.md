@@ -6,7 +6,7 @@ This is Xiaomi Mi Smart Power Plug plugin for [Homebridge](https://github.com/nf
 
 ### Dependency
 
-* miio version less than 0.15.0 (^0.14.1)
+* `miio` version less than 0.15.0 (^0.14.1)
 
 ### Features
 
@@ -21,7 +21,7 @@ This is Xiaomi Mi Smart Power Plug plugin for [Homebridge](https://github.com/nf
    ```
 
 
-2. Add following accessory to the `config.json`.
+2. Add following accessory to `config.json`.
 
    ```
      "accessories": [

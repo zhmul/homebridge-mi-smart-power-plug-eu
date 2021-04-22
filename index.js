@@ -64,7 +64,7 @@ MiSmartPowerPlug.prototype = {
                     return;
                 }
 
-                if(device.type != 'power-strip') 
+                if(device.type != 'power-plug') 
                     return;
                 
                 devices[reg.id] = device;
